@@ -1,0 +1,15 @@
+# Exclude everything by default
+**/*
+
+# Don't exclude folders (i.e. only exclude files)
+!**/*/
+
+# Include specific files
+!src/pages/**/*.tsx
+!src/**/*.ts
+!src/**/*.tsx
+!next.config.js
+!tailwind.config.js
+!public/locales/**/*.json
+!*.json
+!*.js
