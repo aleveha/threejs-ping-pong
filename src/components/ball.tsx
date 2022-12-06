@@ -15,7 +15,7 @@ export const Ball = forwardRef<Mesh, Props>(({ ball, onMove }, ref) => {
 
 	return (
 		<mesh ref={ref}>
-			<sphereBufferGeometry args={[radius, 100, 100]} />
+			<sphereBufferGeometry args={[radius, 10, 10]} />
 			<meshToonMaterial color={color} />
 		</mesh>
 	);

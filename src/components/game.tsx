@@ -7,6 +7,8 @@ import { Mesh, Vector3 } from "three";
 import confetti from "canvas-confetti";
 import { withScene } from "../hooks/withScene";
 import { Line } from "./line";
+import { useAtom } from "jotai";
+import { modalState } from "../states/modalState";
 
 type GameStatus = "not-started" | "started" | "playing" | "ended";
 
@@ -18,6 +20,7 @@ const GameComponent: FC = () => {
 	const [gameState, setGameState] = useState<GameStatus>("not-started");
 	const upLineRef = useRef<Mesh>(null);
 	const downLineRef = useRef<Mesh>(null);
+	const [, setModalState] = useAtom(modalState);
 
 	const handleStartGame = useCallback(() => {
 		setGameState("started");
@@ -129,8 +132,13 @@ const GameComponent: FC = () => {
 	]);
 
 	useEffect(() => {
-		handleStartGame();
-	}, []);
+		setModalState({
+			handleButtonClick: handleStartGame,
+			isBallMovingRight,
+			isOpen: gameState === "not-started" || gameState === "ended",
+			isGameEnded: gameState === "ended",
+		});
+	}, [gameState, handleStartGame, isBallMovingRight, setModalState]);
 
 	return (
 		<>
@@ -147,12 +155,6 @@ const GameComponent: FC = () => {
 			<Ball ball={ball} onMove={moveBall} ref={ballRef} />
 			<Line length={19} position={new Vector3(0, 0, -10)} ref={upLineRef} />
 			<Line length={19} position={new Vector3(0, 0, 10)} ref={downLineRef} />
-			{/*<Modal*/}
-			{/*	isBallMovingRight={isBallMovingRight}*/}
-			{/*	isEnded={gameState === "ended"}*/}
-			{/*	isOpen={["not-started", "ended"].includes(gameState)}*/}
-			{/*	onClick={handleStartGame}*/}
-			{/*/>*/}
 		</>
 	);
 };
