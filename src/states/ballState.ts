@@ -2,12 +2,14 @@ import { atom } from "jotai";
 import { DEFAULT_PADDLE_VALUES } from "./paddleState";
 
 export interface BallState {
+	angle: number;
 	color: string;
 	radius: number;
 	speed: number;
 }
 
 const DEFAULT_BALL_VALUES: BallState = {
+	angle: 0,
 	color: "red",
 	radius: DEFAULT_PADDLE_VALUES.height / 2,
 	speed: 0.1,

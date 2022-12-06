@@ -15,22 +15,19 @@ export const usePaddle = (side: "left" | "right") => {
 		[paddle, setPaddle],
 	);
 
-	const movePaddle = useCallback(
-		(direction: "up" | "down") => {
-			if (!paddleRef.current) {
-				return;
-			}
+	const movePaddle = useCallback((direction: "up" | "down") => {
+		if (!paddleRef.current) {
+			return;
+		}
 
-			if (direction === "up" && paddleRef.current.position.y < 5) {
-				return (paddleRef.current.position.z += paddle.width * 0.1);
-			}
+		if (direction === "up" && paddleRef.current.position.z < 8) {
+			return (paddleRef.current.position.z += 1);
+		}
 
-			if (direction === "down" && paddleRef.current.position.y > -5) {
-				return (paddleRef.current.position.z -= paddle.width * 0.1);
-			}
-		},
-		[paddle.width],
-	);
+		if (direction === "down" && paddleRef.current.position.z > -8) {
+			return (paddleRef.current.position.z -= 1);
+		}
+	}, []);
 
 	const resetPaddle = useCallback(() => {
 		if (!paddleRef.current) {

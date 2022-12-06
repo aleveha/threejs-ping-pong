@@ -12,7 +12,7 @@ export const Scene: FC<Props> = ({ children }) => {
 	return (
 		<Canvas
 			camera={{
-				position: [0, 10, 10],
+				position: [0, 15, 15],
 			}}
 		>
 			<CameraControls ref={cameraRef} />

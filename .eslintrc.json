@@ -12,8 +12,7 @@
 		],
 		"linebreak-style": 0,
 		"quotes": ["error", "double"],
-		"semi": ["error", "always"],
-		"@typescript-eslint/no-explicit-any": ["error"]
+		"semi": ["error", "always"]
 	},
 	"extends": [
 		"eslint:recommended",

@@ -5,13 +5,20 @@ import { ballState } from "../states/ballState";
 
 export const useBall = () => {
 	const ballRef = useRef<Mesh>(null);
-	const [paddle, setPaddle] = useAtom(ballState);
+	const [ball, setBall] = useAtom(ballState);
 
 	const setBallColor = useCallback(
 		(color: string) => {
-			setPaddle({ ...paddle, color });
+			setBall({ ...ball, color });
 		},
-		[paddle, setPaddle],
+		[ball, setBall],
+	);
+
+	const setAngle = useCallback(
+		(angle: number) => {
+			setBall({ ...ball, angle });
+		},
+		[ball, setBall],
 	);
 
 	const resetBall = useCallback(() => {
@@ -21,7 +28,8 @@ export const useBall = () => {
 
 		ballRef.current.position.x = 0;
 		ballRef.current.position.z = 0;
-	}, []);
+		setAngle(0);
+	}, [setAngle]);
 
-	return [ballRef, paddle, setBallColor, resetBall] as const;
+	return [ballRef, ball, setBallColor, setAngle, resetBall] as const;
 };
