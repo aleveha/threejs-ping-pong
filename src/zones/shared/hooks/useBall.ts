@@ -1,7 +1,7 @@
+import { ballState } from "@zones/shared/states/ballState";
 import { useAtom } from "jotai";
 import { useCallback, useRef } from "react";
 import { Mesh } from "three";
-import { ballState } from "../states/ballState";
 
 export const useBall = () => {
 	const ballRef = useRef<Mesh>(null);

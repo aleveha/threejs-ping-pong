@@ -9,7 +9,7 @@ interface Props {
 export const Line = forwardRef<Mesh, Props>(({ length, position }, ref) => {
 	return (
 		<mesh position={position} ref={ref}>
-			<boxGeometry args={[length, 1, 0.5]} />
+			<boxGeometry args={[length, 10, 5]} />
 			<meshStandardMaterial color="white" />
 		</mesh>
 	);

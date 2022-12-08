@@ -10,9 +10,9 @@ export interface BallState {
 
 const DEFAULT_BALL_VALUES: BallState = {
 	angle: 0,
-	color: "red",
+	color: "white",
 	radius: DEFAULT_PADDLE_VALUES.height / 2,
-	speed: 0.1,
+	speed: 1,
 };
 
 export const ballState = atom(DEFAULT_BALL_VALUES);

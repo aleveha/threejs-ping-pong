@@ -1,14 +1,14 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import { Paddle } from "./paddle";
-import { Ball } from "./ball";
-import { usePaddle } from "../hooks/usePaddle";
-import { useBall } from "../hooks/useBall";
-import { Mesh, Vector3 } from "three";
+import { Ball } from "@zones/shared/components/ball";
+import { Paddle } from "@zones/shared/components/paddle";
+import { useBall } from "@zones/shared/hooks/useBall";
+import { usePaddle } from "@zones/shared/hooks/usePaddle";
 import confetti from "canvas-confetti";
-import { withScene } from "../hooks/withScene";
-import { Line } from "./line";
 import { useAtom } from "jotai";
-import { modalState } from "../states/modalState";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import { Mesh, Vector3 } from "three";
+import { withScene } from "../hooks/withScene";
+import { modalState } from "../states/modal-state";
+import { Line } from "./line";
 
 type GameStatus = "not-started" | "started" | "playing" | "ended";
 
@@ -33,14 +33,14 @@ const GameComponent: FC = () => {
 	}, [resetBall, resetLeftPaddle, resetRightPaddle]);
 
 	const getHitAngle = useCallback((paddlePosition: Vector3, ballPosition: Vector3) => {
-		let angle = ballPosition.angleTo(paddlePosition) / 1.5;
+		let angle = ballPosition.angleTo(paddlePosition) / 0.15;
 
 		if (paddlePosition.z > ballPosition.z) {
 			angle = -Math.abs(angle);
 		}
 
 		if (angle === 0) {
-			angle = 0.1;
+			angle = 1;
 		}
 
 		return angle;
@@ -138,23 +138,23 @@ const GameComponent: FC = () => {
 			isOpen: gameState === "not-started" || gameState === "ended",
 			isGameEnded: gameState === "ended",
 		});
-	}, [gameState, handleStartGame, isBallMovingRight, setModalState]);
+	}, [gameState, handleStartGame, isBallMovingRight, leftPaddle.color, rightPaddle.color, setModalState]);
 
 	return (
 		<>
 			<Paddle
 				paddle={leftPaddle}
-				position={leftPaddleRef.current?.position ?? new Vector3(-10, 0, 0)}
+				position={leftPaddleRef.current?.position ?? new Vector3(-100, 0, 0)}
 				ref={leftPaddleRef}
 			/>
 			<Paddle
 				paddle={rightPaddle}
-				position={rightPaddleRef.current?.position ?? new Vector3(10, 0, 0)}
+				position={rightPaddleRef.current?.position ?? new Vector3(100, 0, 0)}
 				ref={rightPaddleRef}
 			/>
 			<Ball ball={ball} onMove={moveBall} ref={ballRef} />
-			<Line length={19} position={new Vector3(0, 0, -10)} ref={upLineRef} />
-			<Line length={19} position={new Vector3(0, 0, 10)} ref={downLineRef} />
+			<Line length={190} position={new Vector3(0, 0, -100)} ref={upLineRef} />
+			<Line length={190} position={new Vector3(0, 0, 100)} ref={downLineRef} />
 		</>
 	);
 };

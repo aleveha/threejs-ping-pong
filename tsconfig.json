@@ -16,7 +16,12 @@
 		"incremental": true,
 		"baseUrl": ".",
 		"paths": {
-			"@ui/*": ["src/ui/*"]
+			"@components/*": ["src/components/*"],
+			"@hooks/*": ["src/hooks/*"],
+			"@pages/*": ["src/pages/*"],
+			"@states/*": ["src/states/*"],
+			"@styles/*": ["src/styles/*"],
+			"@zones/*": ["src/zones/*"],
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

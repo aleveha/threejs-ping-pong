@@ -1,5 +1,10 @@
+import {
+	DEFAULT_PADDLE_VALUES,
+	leftPaddleState,
+	PaddleState,
+	rightPaddleState,
+} from "@zones/shared/states/paddleState";
 import { useAtom } from "jotai";
-import { leftPaddleState, rightPaddleState } from "../states/paddleState";
 import { useCallback, useEffect, useRef } from "react";
 import { Mesh } from "three";
 
@@ -8,9 +13,9 @@ export const usePaddle = (side: "left" | "right") => {
 	const paddleRef = useRef<Mesh>(null);
 	const [paddle, setPaddle] = useAtom(isLeftSide ? leftPaddleState : rightPaddleState);
 
-	const setPaddleColor = useCallback(
-		(color: string) => {
-			setPaddle({ ...paddle, color });
+	const updatePaddle = useCallback(
+		(key: keyof PaddleState, value: PaddleState[keyof PaddleState]) => {
+			setPaddle({ ...paddle, [key]: value });
 		},
 		[paddle, setPaddle],
 	);
@@ -20,22 +25,28 @@ export const usePaddle = (side: "left" | "right") => {
 			return;
 		}
 
-		if (direction === "up" && paddleRef.current.position.z < 8) {
-			return (paddleRef.current.position.z += 1);
+		if (direction === "up" && paddleRef.current.position.z < 80) {
+			return (paddleRef.current.position.z += 10);
 		}
 
-		if (direction === "down" && paddleRef.current.position.z > -8) {
-			return (paddleRef.current.position.z -= 1);
+		if (direction === "down" && paddleRef.current.position.z > -80) {
+			return (paddleRef.current.position.z -= 10);
 		}
 	}, []);
 
-	const resetPaddle = useCallback(() => {
-		if (!paddleRef.current) {
-			return;
-		}
+	const resetPaddle = useCallback(
+		(all = false) => {
+			if (!paddleRef.current) {
+				return;
+			}
 
-		paddleRef.current.position.z = 0;
-	}, []);
+			paddleRef.current.position.z = 0;
+			if (all) {
+				setPaddle(DEFAULT_PADDLE_VALUES);
+			}
+		},
+		[setPaddle],
+	);
 
 	useEffect(() => {
 		const leftPaddleHandler = (event: KeyboardEvent) => {
@@ -76,5 +87,5 @@ export const usePaddle = (side: "left" | "right") => {
 		};
 	}, [isLeftSide, movePaddle]);
 
-	return [paddleRef, paddle, setPaddleColor, resetPaddle] as const;
+	return [paddleRef, paddle, updatePaddle, resetPaddle] as const;
 };

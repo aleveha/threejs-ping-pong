@@ -1,6 +1,6 @@
+import { PaddleState } from "@zones/shared/states/paddleState";
 import React, { forwardRef } from "react";
 import { Mesh, Vector3 } from "three";
-import { PaddleState } from "../states/paddleState";
 
 interface Props {
 	paddle: PaddleState;

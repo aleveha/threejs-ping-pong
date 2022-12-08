@@ -1,7 +1,7 @@
+import { useFrame } from "@react-three/fiber";
+import { BallState } from "@zones/shared/states/ballState";
 import React, { forwardRef } from "react";
 import { Mesh } from "three";
-import { useFrame } from "@react-three/fiber";
-import { BallState } from "../states/ballState";
 
 interface Props {
 	ball: BallState;
@@ -15,7 +15,7 @@ export const Ball = forwardRef<Mesh, Props>(({ ball, onMove }, ref) => {
 
 	return (
 		<mesh ref={ref}>
-			<sphereBufferGeometry args={[radius, 10, 10]} />
+			<sphereBufferGeometry args={[radius, 20, 20]} />
 			<meshToonMaterial color={color} />
 		</mesh>
 	);

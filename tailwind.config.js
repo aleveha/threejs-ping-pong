@@ -22,6 +22,9 @@ module.exports = {
 			xl: rem(1120),
 			xxl: rem(1216),
 		},
+		fontFamily: {
+			game: ["'Press Start 2P'", "sans-serif"],
+		},
 	},
 	plugins: [
 		plugin(function ({ addComponents, theme }) {
