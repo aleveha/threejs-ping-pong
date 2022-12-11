@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { Texture } from "three";
+import { Audio, Texture } from "three";
 import { DEFAULT_PADDLE_VALUES } from "./paddleState";
 
 export interface BallState {
@@ -7,10 +7,11 @@ export interface BallState {
 	color: string;
 	radius: number;
 	speed: number;
+	sound?: Audio;
 	texture?: Texture;
 }
 
-const DEFAULT_BALL_VALUES: BallState = {
+export const DEFAULT_BALL_VALUES: BallState = {
 	angle: 0,
 	color: "#ffffff",
 	radius: DEFAULT_PADDLE_VALUES.height / 2,

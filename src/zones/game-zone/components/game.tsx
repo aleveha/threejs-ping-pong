@@ -2,6 +2,7 @@ import { Ball } from "@zones/shared/components/ball";
 import { Paddle } from "@zones/shared/components/paddle";
 import { useBall } from "@zones/shared/hooks/useBall";
 import { usePaddle } from "@zones/shared/hooks/usePaddle";
+import { gameState } from "@zones/shared/states/gameState";
 import confetti from "canvas-confetti";
 import { useAtom } from "jotai";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
@@ -10,27 +11,25 @@ import { withScene } from "../hooks/withScene";
 import { modalState } from "../states/modal-state";
 import { Line } from "./line";
 
-type GameStatus = "not-started" | "started" | "playing" | "ended";
-
 const GameComponent: FC = () => {
 	const [leftPaddleRef, leftPaddle, , resetLeftPaddle] = usePaddle("left");
 	const [rightPaddleRef, rightPaddle, , resetRightPaddle] = usePaddle("right");
 	const [ballRef, ball, updateBall, resetBall] = useBall();
 	const [isBallMovingRight, setIsBallMovingRight] = useState(true);
-	const [gameState, setGameState] = useState<GameStatus>("not-started");
 	const upLineRef = useRef<Mesh>(null);
 	const downLineRef = useRef<Mesh>(null);
 	const [, setModalState] = useAtom(modalState);
+	const [game, setGame] = useAtom(gameState);
 
 	const handleStartGame = useCallback(() => {
-		setGameState("started");
+		setGame(prev => ({ ...prev, state: "started" }));
 		resetLeftPaddle();
 		resetRightPaddle();
 		resetBall();
 
-		const timer = setTimeout(() => setGameState("playing"), 1000);
+		const timer = setTimeout(() => setGame(prev => ({ ...prev, state: "playing" })), 1000);
 		return () => clearTimeout(timer);
-	}, [resetBall, resetLeftPaddle, resetRightPaddle]);
+	}, [resetBall, resetLeftPaddle, resetRightPaddle, setGame]);
 
 	const getHitAngle = useCallback((paddlePosition: Vector3, ballPosition: Vector3) => {
 		let angle = ballPosition.angleTo(paddlePosition) / 0.15;
@@ -61,13 +60,15 @@ const GameComponent: FC = () => {
 
 		if (ballRef.current.position.z - ball.radius <= upLineRef.current.position.z) {
 			invertCurrentAngle();
+			ball.sound?.play();
 		} else if (ballRef.current.position.z + ball.radius >= downLineRef.current.position.z) {
 			invertCurrentAngle();
+			ball.sound?.play();
 		}
-	}, [ball.radius, ballRef, invertCurrentAngle]);
+	}, [ball.radius, ball.sound, ballRef, invertCurrentAngle]);
 
 	const moveBall = useCallback(() => {
-		if (!ballRef.current || !leftPaddleRef.current || !rightPaddleRef.current || gameState !== "playing") {
+		if (!ballRef.current || !leftPaddleRef.current || !rightPaddleRef.current || game.state !== "playing") {
 			return;
 		}
 
@@ -91,6 +92,7 @@ const GameComponent: FC = () => {
 			ballZ <= rightPaddleZ + rightPaddle.width / 2 + ball.radius
 		) {
 			invertCurrentAngle();
+			ball.sound?.play();
 			updateBall("angle", getHitAngle(rightPaddleRef.current.position, ballRef.current.position));
 			setIsBallMovingRight(false);
 			return;
@@ -103,23 +105,25 @@ const GameComponent: FC = () => {
 			ballZ <= leftPaddleZ + leftPaddle.width / 2 + ball.radius
 		) {
 			invertCurrentAngle();
+			ball.sound?.play();
 			updateBall("angle", getHitAngle(leftPaddleRef.current.position, ballRef.current.position));
 			setIsBallMovingRight(true);
 			return;
 		}
 
 		if (ballX <= leftPaddleX - leftPaddle.depth || ballX >= rightPaddleX + rightPaddle.depth) {
-			setGameState("ended");
+			setGame(prev => ({ ...prev, state: "ended" }));
 			confetti({
 				particleCount: 200,
 				spread: 200,
 			});
+			game.winSound?.play();
 			return;
 		}
 	}, [
 		ball,
 		ballRef,
-		gameState,
+		game,
 		getHitAngle,
 		handleBallHitWall,
 		invertCurrentAngle,
@@ -128,6 +132,7 @@ const GameComponent: FC = () => {
 		leftPaddleRef,
 		rightPaddle,
 		rightPaddleRef,
+		setGame,
 		updateBall,
 	]);
 
@@ -135,10 +140,10 @@ const GameComponent: FC = () => {
 		setModalState({
 			handleButtonClick: handleStartGame,
 			isBallMovingRight,
-			isOpen: gameState === "not-started" || gameState === "ended",
-			isGameEnded: gameState === "ended",
+			isOpen: game.state === "not-started" || game.state === "ended",
+			isGameEnded: game.state === "ended",
 		});
-	}, [gameState, handleStartGame, isBallMovingRight, leftPaddle.color, rightPaddle.color, setModalState]);
+	}, [game.state, handleStartGame, isBallMovingRight, leftPaddle.color, rightPaddle.color, setModalState]);
 
 	return (
 		<>

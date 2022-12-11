@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber";
-import { BallState } from "@zones/shared/states/ballState";
+import { BallState, DEFAULT_BALL_VALUES } from "@zones/shared/states/ballState";
 import React, { forwardRef, useEffect, useRef } from "react";
 import { Mesh, MeshStandardMaterial } from "three";
 
@@ -28,7 +28,7 @@ export const Ball = forwardRef<Mesh, Props>(({ ball, onMove }, ref) => {
 	return (
 		<mesh ref={ref}>
 			<sphereBufferGeometry args={[radius, 50, 50]} />
-			<meshStandardMaterial color={!texture ? color : "#ffffff"} ref={materialRef} />
+			<meshStandardMaterial color={!texture ? color : DEFAULT_BALL_VALUES.color} ref={materialRef} />
 		</mesh>
 	);
 });
