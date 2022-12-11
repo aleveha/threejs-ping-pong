@@ -15,7 +15,7 @@ type GameStatus = "not-started" | "started" | "playing" | "ended";
 const GameComponent: FC = () => {
 	const [leftPaddleRef, leftPaddle, , resetLeftPaddle] = usePaddle("left");
 	const [rightPaddleRef, rightPaddle, , resetRightPaddle] = usePaddle("right");
-	const [ballRef, ball, , setAngle, resetBall] = useBall();
+	const [ballRef, ball, updateBall, resetBall] = useBall();
 	const [isBallMovingRight, setIsBallMovingRight] = useState(true);
 	const [gameState, setGameState] = useState<GameStatus>("not-started");
 	const upLineRef = useRef<Mesh>(null);
@@ -48,11 +48,11 @@ const GameComponent: FC = () => {
 
 	const invertCurrentAngle = useCallback(() => {
 		if (ball.angle > 0) {
-			setAngle(-Math.abs(ball.angle));
+			updateBall("angle", -Math.abs(ball.angle));
 		} else {
-			setAngle(Math.abs(ball.angle));
+			updateBall("angle", Math.abs(ball.angle));
 		}
-	}, [ball.angle, setAngle]);
+	}, [ball.angle, updateBall]);
 
 	const handleBallHitWall = useCallback(() => {
 		if (!ballRef.current || !upLineRef.current || !downLineRef.current) {
@@ -91,7 +91,7 @@ const GameComponent: FC = () => {
 			ballZ <= rightPaddleZ + rightPaddle.width / 2 + ball.radius
 		) {
 			invertCurrentAngle();
-			setAngle(getHitAngle(rightPaddleRef.current.position, ballRef.current.position));
+			updateBall("angle", getHitAngle(rightPaddleRef.current.position, ballRef.current.position));
 			setIsBallMovingRight(false);
 			return;
 		}
@@ -103,7 +103,7 @@ const GameComponent: FC = () => {
 			ballZ <= leftPaddleZ + leftPaddle.width / 2 + ball.radius
 		) {
 			invertCurrentAngle();
-			setAngle(getHitAngle(leftPaddleRef.current.position, ballRef.current.position));
+			updateBall("angle", getHitAngle(leftPaddleRef.current.position, ballRef.current.position));
 			setIsBallMovingRight(true);
 			return;
 		}
@@ -128,7 +128,7 @@ const GameComponent: FC = () => {
 		leftPaddleRef,
 		rightPaddle,
 		rightPaddleRef,
-		setAngle,
+		updateBall,
 	]);
 
 	useEffect(() => {

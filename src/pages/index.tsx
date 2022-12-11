@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { FC } from "react";
 
 const Homepage: FC = () => (
-	<div className="flex justify-start bg-neutral-900">
+	<div className="flex justify-start">
 		<div className="container flex h-screen flex-col justify-center space-y-8 px-6 text-white">
 			<h1 className="text-4xl">Vítejte ve hře!</h1>
 			<p>

@@ -5,7 +5,7 @@ import Head from "next/head";
 import React, { FC } from "react";
 
 const GamePage: FC = () => (
-	<div className="h-screen bg-neutral-900">
+	<div className="h-screen">
 		<Game />
 		<GameStateModal />
 	</div>

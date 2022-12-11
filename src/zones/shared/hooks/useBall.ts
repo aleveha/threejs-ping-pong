@@ -1,4 +1,4 @@
-import { ballState } from "@zones/shared/states/ballState";
+import { BallState, ballState } from "@zones/shared/states/ballState";
 import { useAtom } from "jotai";
 import { useCallback, useRef } from "react";
 import { Mesh } from "three";
@@ -7,16 +7,9 @@ export const useBall = () => {
 	const ballRef = useRef<Mesh>(null);
 	const [ball, setBall] = useAtom(ballState);
 
-	const setBallColor = useCallback(
-		(color: string) => {
-			setBall({ ...ball, color });
-		},
-		[ball, setBall],
-	);
-
-	const setAngle = useCallback(
-		(angle: number) => {
-			setBall({ ...ball, angle });
+	const updateBall = useCallback(
+		(key: keyof BallState, value: BallState[keyof BallState]) => {
+			setBall({ ...ball, [key]: value });
 		},
 		[ball, setBall],
 	);
@@ -28,8 +21,8 @@ export const useBall = () => {
 
 		ballRef.current.position.x = 0;
 		ballRef.current.position.z = 0;
-		setAngle(0);
-	}, [setAngle]);
+		updateBall("angle", 0);
+	}, [updateBall]);
 
-	return [ballRef, ball, setBallColor, setAngle, resetBall] as const;
+	return [ballRef, ball, updateBall, resetBall] as const;
 };

@@ -1,18 +1,18 @@
 import { Paddle } from "@zones/shared/components/paddle";
 import { Scene } from "@zones/shared/components/scene";
 import { PaddleState } from "@zones/shared/states/paddleState";
-import React, { FC } from "react";
+import React, { ChangeEvent, FC } from "react";
 import { Vector3 } from "three";
 
 interface Props {
 	accentColor: string;
-	handleSliderChange: (key: keyof PaddleState) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+	handleSliderChange: (key: keyof PaddleState) => (e: ChangeEvent<HTMLInputElement>) => void;
 	name: string;
 	paddle: PaddleState;
 }
 
 export const PlayerPaddleSettings: FC<Props> = ({ accentColor, handleSliderChange, name, paddle }) => (
-	<div className="flex w-full flex-col items-center justify-between">
+	<div className="flex w-full flex-col items-center justify-between space-y-8">
 		<p className="text-center">{name}</p>
 		<div className="flex w-2/3 flex-col space-y-2">
 			<label className="text-center text-sm" htmlFor="color">
@@ -74,7 +74,7 @@ export const PlayerPaddleSettings: FC<Props> = ({ accentColor, handleSliderChang
 				type="range"
 			/>
 		</div>
-		<div className="h-2/5 w-full cursor-grab">
+		<div className="h-60 w-full cursor-grab">
 			<Scene cameraPosition={[15, 15, 25]}>
 				<Paddle paddle={paddle} position={new Vector3(0, 0, 0)} />
 			</Scene>
