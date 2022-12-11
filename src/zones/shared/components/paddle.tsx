@@ -1,6 +1,6 @@
-import { PaddleState } from "@zones/shared/states/paddleState";
-import React, { forwardRef } from "react";
-import { Mesh, Vector3 } from "three";
+import { DEFAULT_PADDLE_VALUES, PaddleState } from "@zones/shared/states/paddleState";
+import React, { forwardRef, useEffect, useRef } from "react";
+import { Mesh, MeshStandardMaterial, Vector3 } from "three";
 
 interface Props {
 	paddle: PaddleState;
@@ -8,12 +8,20 @@ interface Props {
 }
 
 export const Paddle = forwardRef<Mesh, Props>(({ paddle, position }, ref) => {
-	const { color, depth, height, width } = paddle;
+	const { color, depth, height, texture, width } = paddle;
+	const materialRef = useRef<MeshStandardMaterial>(null);
+
+	useEffect(() => {
+		if (materialRef && materialRef.current) {
+			materialRef.current.map = texture ?? null;
+			materialRef.current.needsUpdate = true;
+		}
+	}, [texture]);
 
 	return (
 		<mesh position={position} ref={ref}>
 			<boxGeometry args={[depth, height, width]} />
-			<meshStandardMaterial color={color} />
+			<meshStandardMaterial color={!texture ? color : DEFAULT_PADDLE_VALUES.color} ref={materialRef} />
 		</mesh>
 	);
 });

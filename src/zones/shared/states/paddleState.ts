@@ -1,9 +1,11 @@
 import { atom } from "jotai";
+import { Texture } from "three";
 
 export interface PaddleState {
 	color: string;
 	depth: number;
 	height: number;
+	texture?: Texture;
 	width: number;
 }
 

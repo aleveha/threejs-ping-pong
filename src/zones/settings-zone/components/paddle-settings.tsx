@@ -2,10 +2,11 @@ import { PlayerPaddleSettings } from "@zones/settings-zone/components/player-pad
 import { usePaddle } from "@zones/shared/hooks/usePaddle";
 import { DEFAULT_PADDLE_VALUES, PaddleState } from "@zones/shared/states/paddleState";
 import React, { ChangeEventHandler, FC, useCallback, useState } from "react";
+import { TextureLoader } from "three";
 
 type HandleSliderChange = (
 	side: "left" | "right",
-) => (key: keyof PaddleState, isNumber?: boolean) => ChangeEventHandler<HTMLInputElement>;
+) => (key: keyof PaddleState, isNumber?: boolean) => ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
 
 export const PaddleSettings: FC = () => {
 	const [, leftPaddle, updateLeftPaddle] = usePaddle("left");
@@ -24,7 +25,13 @@ export const PaddleSettings: FC = () => {
 			}
 
 			const value =
-				typeof DEFAULT_PADDLE_VALUES[key] === "number" ? parseInt(e.target.value, 10) : e.target.value;
+				typeof DEFAULT_PADDLE_VALUES[key] === "number"
+					? parseInt(e.target.value, 10)
+					: key === "texture"
+					? e.target.value.length > 0
+						? new TextureLoader().load("/static/textures/" + e.target.value)
+						: undefined
+					: e.target.value;
 
 			if (side === "left") {
 				updateLeftPaddle(key, value);
