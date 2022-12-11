@@ -4,7 +4,7 @@
 	"plugins": ["@typescript-eslint"],
 	"rules": {
 		"indent": [
-			"error",
+			"warn",
 			"tab",
 			{
 				"SwitchCase": 1
