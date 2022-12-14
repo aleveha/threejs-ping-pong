@@ -16,22 +16,22 @@ export const GameStateModal: FC = () => {
 		>
 			<div className="flex flex-col items-start space-y-12 p-16 text-white">
 				<h1 className="font-mono text-center text-4xl font-bold">
-					{isGameEnded ? `Hráč ${isBallMovingRight ? 1 : 2} vyhrál!` : "Návod ke hře"}
+					{isGameEnded ? `Player ${isBallMovingRight ? 1 : 2} won!` : "Game Instructions"}
 				</h1>
 				<p className="flex flex-col space-y-4 text-lg">
-					<span>Cílem je dostat míček za soupeře.</span>
+					<span>The goal is to get the ball behind the opponent.</span>
 					<span>
-						Stisknutím <b>W</b> nebo <b>S</b> pohnete levým paddlem.
+						Press <b>W</b> or <b>S</b> to move the left paddle.
 					</span>
-					<span>Stisknutím ⬆️ nebo ⬇️ pohnete pravým paddlem.</span>
-					<span>Pomocí myši přibližujte nebo přesouvejte kameru.</span>
+					<span>Press ⬆️ or ⬇️ to move the right paddle.</span>
+					<span>Use the mouse to zoom or move the camera.</span>
 				</p>
 				<div className="flex h-8 items-start space-x-8">
 					<Link className="border-b-2 px-1 pb-1 hover:border-b-8" href="/">
-						Zpět
+						Back
 					</Link>
 					<button type="button" className="border-b-2 px-1 pb-1 hover:border-b-8" onClick={handleButtonClick}>
-						{isGameEnded ? "Začít znovu" : "Zahrát"}
+						{isGameEnded ? "Play again" : "Play"}
 					</button>
 				</div>
 			</div>

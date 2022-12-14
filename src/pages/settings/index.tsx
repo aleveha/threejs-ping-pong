@@ -7,16 +7,16 @@ import React from "react";
 
 const SettingsPage: NextPage = () => (
 	<div className="container flex flex-col justify-between space-y-16 px-6 py-20 text-white">
-		<h1 className="text-3xl">Na této stránce si můžete hru nakonfigurovat podle svých představ.</h1>
+		<h1 className="text-3xl">On this page you can configure the game to your liking.</h1>
 		<PaddleSettings />
 		<hr className="border-t-2" />
 		<GameSettings />
 		<div className="flex h-16 items-start space-x-8">
 			<Link className="border-b-2 px-1 pb-1 hover:border-b-8" href="/">
-				Zpět
+				Back
 			</Link>
 			<Link className="border-b-2 px-1 pb-1 hover:border-b-8" href="/game">
-				Hrát
+				Play
 			</Link>
 		</div>
 	</div>
@@ -25,7 +25,7 @@ const SettingsPage: NextPage = () => (
 const Page: NextPage = () => (
 	<>
 		<Head>
-			<title>Nastavení hry</title>
+			<title>Game settings</title>
 		</Head>
 		<SettingsPage />
 	</>

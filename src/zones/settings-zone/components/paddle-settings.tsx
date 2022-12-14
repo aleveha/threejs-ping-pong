@@ -55,13 +55,13 @@ export const PaddleSettings: FC = () => {
 			<PlayerPaddleSettings
 				accentColor={accentColorLeft}
 				handlePaddleChange={handlePaddleChange("left")}
-				name="Hráč 1"
+				name="Player 1"
 				paddle={leftPaddle}
 			/>
 			<PlayerPaddleSettings
 				accentColor={accentColorRight}
 				handlePaddleChange={handlePaddleChange("right")}
-				name="Hráč 2"
+				name="Player 2"
 				paddle={rightPaddle}
 			/>
 		</div>

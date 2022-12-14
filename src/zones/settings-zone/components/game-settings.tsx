@@ -68,11 +68,11 @@ export const GameSettings: FC = () => {
 	return (
 		<div className="grid w-full grid-cols-2 divide-x-2 divide-white self-center">
 			<div className="flex w-full flex-col items-center justify-between space-y-8">
-				<p className="text-center">Míč</p>
+				<p className="text-center">Ball</p>
 				<div className="flex w-2/3 space-x-2">
 					<div className="flex w-1/2 flex-col space-y-2">
 						<label className="text-center text-sm" htmlFor="color">
-							Barva
+							Color
 						</label>
 						<input
 							className="h-8 w-full"
@@ -85,7 +85,7 @@ export const GameSettings: FC = () => {
 					</div>
 					<div className="flex w-1/2 flex-col space-y-2">
 						<label className="text-center text-sm" htmlFor="texture">
-							Textura
+							Texture
 						</label>
 						<select
 							className="py-1.5 pl-1 text-neutral-900"
@@ -94,10 +94,10 @@ export const GameSettings: FC = () => {
 							onChange={handleBallTextureChange}
 						>
 							<option value="" />
-							<option value="bricks.jpg">Cihly</option>
-							<option value="jeans.jpg">Džíny</option>
-							<option value="space.jpg">Vesmír</option>
-							<option value="stones.jpg">Kameny</option>
+							<option value="bricks.jpg">Bricks</option>
+							<option value="jeans.jpg">Jeans</option>
+							<option value="space.jpg">Space</option>
+							<option value="stones.jpg">Stones</option>
 						</select>
 					</div>
 				</div>
@@ -108,10 +108,10 @@ export const GameSettings: FC = () => {
 				</div>
 			</div>
 			<div className="flex w-full flex-col items-center space-y-8">
-				<p className="text-center">Zvuky</p>
+				<p className="text-center">Sounds</p>
 				<div className="flex w-2/3 flex-col space-y-2">
 					<label className="text-center text-sm" htmlFor="sound/touch">
-						Klepání
+						Bouncing
 					</label>
 					<select
 						className="py-1.5 pl-1 text-neutral-900"
@@ -121,8 +121,8 @@ export const GameSettings: FC = () => {
 					>
 						<option value="" />
 						<option value="alert.wav">Alert</option>
-						<option value="fart.wav">Prd</option>
-						<option value="notification.wav">Upozornění</option>
+						<option value="fart.wav">Fart</option>
+						<option value="notification.wav">Notification</option>
 					</select>
 				</div>
 				<div className="flex w-2/3 flex-col space-y-2">
@@ -136,9 +136,9 @@ export const GameSettings: FC = () => {
 						onChange={handleWinSoundChange}
 					>
 						<option value="" />
-						<option value="crowd-cheering-victory.wav">Dav jásá nad vítězstvím</option>
-						<option value="group-applause.wav">Hromadný potlesk</option>
-						<option value="video-game-win.wav">Jako výhra v počítačové hře</option>
+						<option value="crowd-cheering-victory.wav">The crowd cheers the victory</option>
+						<option value="group-applause.wav">Mass applause</option>
+						<option value="video-game-win.wav">Computer game win</option>
 					</select>
 				</div>
 			</div>

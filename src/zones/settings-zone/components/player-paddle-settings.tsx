@@ -27,7 +27,7 @@ export const PlayerPaddleSettings: FC<Props> = ({ accentColor, handlePaddleChang
 		<div className="flex w-2/3 space-x-2">
 			<div className="flex w-1/2 flex-col space-y-2">
 				<label className="text-center text-sm" htmlFor="color">
-					Barva
+					Color
 				</label>
 				<input
 					className="h-8 w-full"
@@ -40,7 +40,7 @@ export const PlayerPaddleSettings: FC<Props> = ({ accentColor, handlePaddleChang
 			</div>
 			<div className="flex w-1/2 flex-col space-y-2">
 				<label className="text-center text-sm" htmlFor="texture">
-					Textura
+					Texture
 				</label>
 				<select
 					className="py-1.5 pl-1 text-neutral-900"
@@ -49,16 +49,16 @@ export const PlayerPaddleSettings: FC<Props> = ({ accentColor, handlePaddleChang
 					onChange={handlePaddleChange("texture")}
 				>
 					<option value="" />
-					<option value="bricks.jpg">Cihly</option>
-					<option value="jeans.jpg">Džíny</option>
-					<option value="space.jpg">Vesmír</option>
-					<option value="stones.jpg">Kameny</option>
+					<option value="bricks.jpg">Bricks</option>
+					<option value="jeans.jpg">Jeans</option>
+					<option value="space.jpg">Space</option>
+					<option value="stones.jpg">Stones</option>
 				</select>
 			</div>
 		</div>
 		<div className="flex w-2/3 flex-col space-y-2">
 			<label className="text-center text-sm" htmlFor="height">
-				Výška
+				Height
 			</label>
 			<input
 				className="cursor-grab"
@@ -74,7 +74,7 @@ export const PlayerPaddleSettings: FC<Props> = ({ accentColor, handlePaddleChang
 		</div>
 		<div className="flex w-2/3 flex-col space-y-2">
 			<label className="text-center text-sm" htmlFor="width">
-				Šířka
+				Width
 			</label>
 			<input
 				className="cursor-grab"
@@ -90,7 +90,7 @@ export const PlayerPaddleSettings: FC<Props> = ({ accentColor, handlePaddleChang
 		</div>
 		<div className="flex w-2/3 flex-col space-y-2">
 			<label className="text-center text-sm" htmlFor="width">
-				Hloubka
+				Depth
 			</label>
 			<input
 				className="cursor-grab"

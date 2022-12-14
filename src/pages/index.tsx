@@ -6,18 +6,18 @@ import React, { FC } from "react";
 const Homepage: FC = () => (
 	<div className="flex justify-start">
 		<div className="container flex h-screen flex-col justify-center space-y-8 px-6 text-white">
-			<h1 className="text-4xl">Vítejte ve hře!</h1>
+			<h1 className="text-4xl">Welcome to the game!</h1>
 			<p>
-				<span>Je to tenisová počítačová hra s 3D grafikou pro dva hráče.</span>
+				<span>It is a pong game with 3D graphics for two players or one player with AI.</span>
 				<br />
-				<span>Zvítězí nejsilnější!</span>
+				<span>The strongest wins!</span>
 			</p>
 			<div className="flex h-8 items-start space-x-8">
 				<Link className="border-b-2 px-1 pb-1 hover:border-b-8" href="/settings">
-					Nastavení
+					Settings
 				</Link>
 				<Link className="border-b-2 px-1 pb-1 hover:border-b-8" href="/game">
-					Hrát
+					Play
 				</Link>
 			</div>
 		</div>
@@ -27,7 +27,7 @@ const Homepage: FC = () => (
 const Page: NextPage = () => (
 	<>
 		<Head>
-			<title>Vítejte ve hře!</title>
+			<title>Welcome to the game!</title>
 		</Head>
 		<Homepage />
 	</>
