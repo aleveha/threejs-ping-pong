@@ -5,6 +5,7 @@ export interface PaddleState {
 	color: string;
 	depth: number;
 	height: number;
+	isAi: boolean;
 	texture?: Texture;
 	width: number;
 }
@@ -13,6 +14,7 @@ export const DEFAULT_PADDLE_VALUES: PaddleState = {
 	color: "#ffffff",
 	depth: 5,
 	height: 10,
+	isAi: false,
 	width: 30,
 };
 

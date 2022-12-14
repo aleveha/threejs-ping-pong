@@ -14,13 +14,21 @@ export const PaddleSettings: FC = () => {
 	const [accentColorLeft, setAccentColorLeft] = useState<string>(leftPaddle.color);
 	const [accentColorRight, setAccentColorRight] = useState<string>(rightPaddle.color);
 
-	const handleSliderChange = useCallback<HandleSliderChange>(
+	const handlePaddleChange = useCallback<HandleSliderChange>(
 		side => key => e => {
 			if (key === "color") {
 				if (side === "left") {
 					setAccentColorLeft(e.target.value);
 				} else {
 					setAccentColorRight(e.target.value);
+				}
+			}
+
+			if (key === "isAi" && e.target instanceof HTMLInputElement) {
+				if (side === "left") {
+					return updateLeftPaddle(key, e.target.checked);
+				} else {
+					return updateRightPaddle(key, e.target.checked);
 				}
 			}
 
@@ -46,13 +54,13 @@ export const PaddleSettings: FC = () => {
 		<div className="grid w-full grid-cols-2 divide-x-2 divide-white self-center">
 			<PlayerPaddleSettings
 				accentColor={accentColorLeft}
-				handleSliderChange={handleSliderChange("left")}
+				handlePaddleChange={handlePaddleChange("left")}
 				name="Hráč 1"
 				paddle={leftPaddle}
 			/>
 			<PlayerPaddleSettings
 				accentColor={accentColorRight}
-				handleSliderChange={handleSliderChange("right")}
+				handlePaddleChange={handlePaddleChange("right")}
 				name="Hráč 2"
 				paddle={rightPaddle}
 			/>

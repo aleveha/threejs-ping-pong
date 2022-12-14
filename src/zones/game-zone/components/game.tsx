@@ -12,8 +12,8 @@ import { modalState } from "../states/modal-state";
 import { Line } from "./line";
 
 const GameComponent: FC = () => {
-	const [leftPaddleRef, leftPaddle, , resetLeftPaddle] = usePaddle("left");
-	const [rightPaddleRef, rightPaddle, , resetRightPaddle] = usePaddle("right");
+	const [leftPaddleRef, leftPaddle, , resetLeftPaddle, aiMoveLeftPaddle] = usePaddle("left");
+	const [rightPaddleRef, rightPaddle, , resetRightPaddle, aiMoveRightPaddle] = usePaddle("right");
 	const [ballRef, ball, updateBall, resetBall] = useBall();
 	const [isBallMovingRight, setIsBallMovingRight] = useState(true);
 	const upLineRef = useRef<Mesh>(null);
@@ -134,6 +134,32 @@ const GameComponent: FC = () => {
 		rightPaddleRef,
 		setGame,
 		updateBall,
+	]);
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			if (!ballRef.current || game.state !== "playing") {
+				return;
+			}
+
+			if (isBallMovingRight && rightPaddle.isAi) {
+				return aiMoveRightPaddle(ballRef.current.position);
+			}
+
+			if (!isBallMovingRight && leftPaddle.isAi) {
+				aiMoveLeftPaddle(ballRef.current.position);
+			}
+		}, 100);
+
+		return () => clearInterval(timer);
+	}, [
+		aiMoveLeftPaddle,
+		aiMoveRightPaddle,
+		ballRef,
+		game.state,
+		isBallMovingRight,
+		leftPaddle.isAi,
+		rightPaddle.isAi,
 	]);
 
 	useEffect(() => {

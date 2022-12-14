@@ -6,7 +6,7 @@ import {
 } from "@zones/shared/states/paddleState";
 import { useAtom } from "jotai";
 import { useCallback, useEffect, useRef } from "react";
-import { Mesh } from "three";
+import { Mesh, Vector3 } from "three";
 
 export const usePaddle = (side: "left" | "right") => {
 	const isLeftSide = side === "left";
@@ -48,6 +48,23 @@ export const usePaddle = (side: "left" | "right") => {
 		[setPaddle],
 	);
 
+	const aiMovePaddle = useCallback(
+		(ballPosition: Vector3) => {
+			if (!paddleRef.current) {
+				return;
+			}
+
+			if (ballPosition.z > paddleRef.current.position.z + paddle.width / 5) {
+				return (paddleRef.current.position.z += 10);
+			}
+
+			if (ballPosition.z < paddleRef.current.position.z - paddle.width / 5) {
+				return (paddleRef.current.position.z -= 10);
+			}
+		},
+		[paddle.width],
+	);
+
 	useEffect(() => {
 		const leftPaddleHandler = (event: KeyboardEvent) => {
 			switch (event.key) {
@@ -75,9 +92,11 @@ export const usePaddle = (side: "left" | "right") => {
 			}
 		};
 
-		if (isLeftSide) {
+		if (isLeftSide && !paddle.isAi) {
 			window.addEventListener("keydown", leftPaddleHandler);
-		} else {
+		}
+
+		if (!isLeftSide && !paddle.isAi) {
 			window.addEventListener("keydown", rightPaddleHandler);
 		}
 
@@ -85,7 +104,7 @@ export const usePaddle = (side: "left" | "right") => {
 			window.removeEventListener("keydown", leftPaddleHandler);
 			window.removeEventListener("keydown", rightPaddleHandler);
 		};
-	}, [isLeftSide, movePaddle]);
+	}, [isLeftSide, movePaddle, paddle.isAi]);
 
-	return [paddleRef, paddle, updatePaddle, resetPaddle] as const;
+	return [paddleRef, paddle, updatePaddle, resetPaddle, aiMovePaddle] as const;
 };
